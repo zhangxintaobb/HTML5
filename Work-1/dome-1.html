@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            width: 800px;
+            height: 500px;
+            margin: 0 auto;
+            border-color: darkgray;
+            border-width: 2px;
+            border-style: solid;
+            padding-left: 100px;
+        }
+        p{
+            color:red;
+        }
+        fieldset{
+            width: 600px;
+        }
+        span{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+     <header>
+        <h1>毕业生信息</h1>
+    </header>
+    <article>
+        <form action="">
+            <fieldset>
+                <legend>
+                    <p >学生信息</p> 
+                </legend>
+                姓&nbsp;&nbsp;名 <input type="text" placeholder="请输入姓名" required name="nam1" autofocus><span> *</span>
+                <br>
+                学&nbsp;&nbsp;号 <input type="text" placeholder="请输入学号" required name="id1" autofocus><span> *</span>
+                <br>
+                手&nbsp;&nbsp;机 <input type="tel" placeholder="请输入手机号" required name="tel1" autofocus><span> *</span>
+                <br>
+                邮&nbsp;&nbsp;箱 <input type="email" placeholder="请输入邮箱地址" required name="email" autofocus><span> *</span>
+            </fieldset>
+            <br>
+            <fieldset>
+                <legend>
+                    <p>录取情况</p>
+                </legend>
+                录取学校 <input type="text" required name="school" autofocus>
+                <br>
+                入学成绩 <input type="number" required name="num" autofocus>
+                <br>
+                入学时间 <input type="date" required name="time" autofocus>
+            </fieldset>
+            <br>
+            <input type="submit" value="提交">
+        </form>
+
+    </article>
+    </div>
+   
+</body>
+</html>
