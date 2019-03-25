@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    #box{
+        width: 400px;
+        height: 300px;
+        margin: 0 auto;
+        border-color: darkgray;
+        border-width: 2px;
+        border-style: solid;
+    }
+    #nav{
+        width: 400px;
+        height: 50px;;
+    }
+    #sea{
+        outline: none;
+        width: 200px;
+        height: 40px;
+        border-color:yellow;
+        margin-left: 5px;
+        margin-top: 5px;
+        border-radius: 5px;
+    }
+    #sub{
+        outline: none;
+        width: 120px;
+        height: 35px;
+        margin-top: 10px;
+        border-radius: 5px;
+      
+    }
+    span{
+        margin-left: 5px;
+    }
+    #del{
+        float: right;
+        background-color: darkgray;
+        outline: none;
+        color: aliceblue;
+    }
+    #a{
+        display:inline-block;
+        margin-top: 20px;
+        margin-right:20px;
+        margin-left:5px;
+        border-radius:2px;
+        background-color: darkgray;
+        
+    }
+</style>
+<body>
+    <div id="box">
+        <header>
+            <div id="nav">
+                <form action="">
+                    <input type="search" name="search" placeholder="请输入想查找的商品" id="sea" >
+                    <input type="button" value="搜索" id="sub" >
+                </form>
+            </div>
+        </header>
+        <article>
+            <span>最近搜索</span>    
+            <div id="record">    
+            </div>
+            <input type="button" value="X" style="display:inline;" id="del">
+        </article>
+    </div>
+</body>
+<script type="text/javascript">
+    var sub= document.getElementById('sub');
+    var record = document.getElementById('record');
+    window.onload = function(){
+        if(!window.localStorage){
+            alert("该浏览器不支持localStorage");
+        }
+        else{
+            loadStroage(record);
+            sub.onclick = function(){
+                var data = document.getElementById('sea').value;
+                var index = localStorage.length;
+                var key;
+                var a=0;
+                if(index == 0){
+                        key = "key"+index;
+                        localStorage.setItem(key,data);
+                        loadStroage(record);
+                }
+                else{
+                     for(var i=0;i<index;i++){
+                        if(localStorage.getItem("key"+i)==data){
+                            a=1;
+                        }   
+                    }
+                     if(a==0){
+                             key = "key"+index;
+                            localStorage.setItem(key,data);
+                            loadStroage(record);
+                        }
+                }
+            }  
+        }
+        function loadStroage(id){
+                var result = '<div style="width:400px;">';
+                for (var i = 0; i < localStorage.length; i++) {
+                    var key = localStorage.key(i);
+                    var value = localStorage.getItem(key);
+                    result += '<div id="a">'
+                        +value+'</div>';
+                }
+                result += '</div>';
+                id.innerHTML = result;
+        }
+         del.onclick = function(){
+            localStorage.clear();
+            alert("全部数据被清除。");
+            loadStroage(record);
+        }
+    }
+</script>
+</html>
