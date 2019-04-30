@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="upcanvas" width="400" height="200" style="position: absolute; left: 0;top: 0;">
+        您的浏览器不支持canvas元素，请更换或更新浏览器
+    </canvas>
+    <canvas id="undercanvas" width="400" height="200"  style="position: absolute; left: 0;top: 0;">
+        您的浏览器不支持canvas元素，请更换或更新浏览器
+    </canvas>
+</body>
+<script>
+    var arr=['一等奖','二等奖','三等奖','谢谢惠顾'];
+    var text=arr[Math.random()*4|0];
+    var undercanvas=document.getElementById('upcanvas');
+    var undercontext=undercanvas.getContext("2d");
+    undercontext.fillStyle="white";
+    undercontext.fillRect(0,0,400,200);
+    undercontext.font = "italic 160px 隶书";
+    undercontext.fillStyle = "#d1d1d1";
+    undercontext.fillText(text, 80, 140,200);
+    var upcanvas = document.getElementById('undercanvas');
+    var upcontext=upcanvas.getContext("2d");
+    //先在图片上画满一个遮罩层，就是简单canvas绘制矩形并且填充颜色，然后此canvas启用
+    upcontext.fillStyle = "#d1d1d1";
+    upcontext.fillRect(0,0,400,200);
+    upcontext.globalCompositeOperation="destination-out";
+    //画圆
+    function drawArcByPoint(x,y){
+        upcontext.beginPath();
+        upcontext.arc(x,y,20,0,2*Math.PI);
+        upcontext.closePath();
+        upcontext.fillStyle='#dddddd';
+        upcontext.fill();
+        checkComplete();
+    }
+    //鼠标按下，增加mousemove的事件监听
+    upcanvas.addEventListener('mousedown',drawArcMouseHandle);
+    //鼠标抬起之后，把mousemove的事件监听撤销
+    upcanvas.addEventListener('mouseup',function(event){
+        this.removeEventListener('mousemove',mousemoveHandle);
+    });
+    //根据鼠标的move画圆
+    function drawArcMouseHandle(event){
+        event.preventDefault();
+        event.target.addEventListener('mousemove',mousemoveHandle);
+    }
+    //为了能够移除mousemove的事件需要单独处理一下
+    function mousemoveHandle(event){
+        event.preventDefault();
+        drawArcByPoint(event.clientX,event.clientY);
+    }
+    //判断区域
+    function checkComplete(){
+        var imgData = upcontext.getImageData(0,0,400,200);
+         var myarr=imgData.data;
+        var len =myarr.length;
+        var count=0;
+        for(var i=0;i<len;i+=4){
+            var alpha = myarr[i+3];
+            if(alpha<10){
+                count++;
+            }
+        }
+        var percent = count/(len/4);
+        if(percent>=0.85){
+            showResult();
+        }
+    }
+    function showResult(){
+        upcontext.clearRect(0,0,400,200);
+        alert(text);
+    }
+</script>
+</html>
